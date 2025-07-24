@@ -98,7 +98,7 @@ const initialTurfs = [
   {
     id: "turf-4",
     name: "Green Field Turf",
-    location: "123 Sport St, Cityville",
+    location: "321 St Andrews Street, Bourville",
     pricePerHour: 1600,
     availableHours: [
       "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00",
@@ -110,7 +110,7 @@ const initialTurfs = [
   {
     id: "turf-5",
     name: "Basketball Court",
-    location: "456 Central Ave, Townburg",
+    location: "527 5th Ave, Johannesburg",
     pricePerHour: 900,
     availableHours: [
       "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00",
@@ -122,7 +122,7 @@ const initialTurfs = [
   {
     id: "turf-6",
     name: "Eagletown Pool",
-    location: "789 Stadium Rd, Metro City",
+    location: "884 Trump Rd, Central City",
     pricePerHour: 2500,
     availableHours: [
       "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00",
