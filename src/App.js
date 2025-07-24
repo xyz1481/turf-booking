@@ -543,7 +543,7 @@ const Header = () => {
 
   return (
     <HeaderContainer>
-      <Logo to="/">TurfBook</Logo>
+      <Logo to="/">JustPlay.</Logo>
       <NavLinks>
         <NavLink to="/">Home</NavLink>
         {currentUser?.role === "player" && (
@@ -617,7 +617,7 @@ const Footer = () => {
         <a href="#privacy">Privacy Policy</a>
         <a href="#terms">Terms of Service</a>
       </FooterLinks>
-      <p>© {new Date().getFullYear()} TurfBook. All rights reserved.</p>
+      <p>© {new Date().getFullYear()} JustPlay.. All rights reserved.</p>
     </FooterContainer>
   );
 };
