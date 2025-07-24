@@ -15,12 +15,11 @@ import {
   FaClock,
   FaRupeeSign,
   FaMapMarkerAlt,
-  FaCheckCircle,
-  FaTimesCircle,
-  FaCog,
   FaStar,
 } from "react-icons/fa";
 import { v4 as uuidv4 } from "uuid";
+import { ToastContainer, toast } from 'react-toastify'; // Import toast for notifications
+import 'react-toastify/dist/ReactToastify.css'; // Import toast styles
 
 // --- 1. Global Styles ---
 const GlobalStyles = createGlobalStyle`
@@ -135,13 +134,13 @@ const initialTurfs = [
 ];
 
 const initialUsers = [
-  { id: "user-1", name: "Player One", email: "playerone@example.com", contactNo: "9876543210", dob: "15/05/1995", role: "player" },
+{ id: "user-1", name: "Player One", email: "playerone@example.com", contactNo: "9876543210", dob: "15/05/1995", role: "player" },
   { id: "admin-1", name: "Turf Owner", email: "admin@example.com", contactNo: "9123456789", dob: "10/03/1980", role: "admin" },
 ];
 
 const initialBookings = [
   {
-    id: uuidv4(),
+  id: uuidv4(),
     turfId: "turf-1",
     date: "2025-07-25",
     timeSlot: "10:00",
@@ -206,13 +205,14 @@ const TurfProvider = ({ children }) => {
   const [bookings, setBookings] = useState(initialBookings);
   const [users, setUsers] = useState(initialUsers);
   const [reviews, setReviews] = useState(initialReviews);
-  const [currentUser, setCurrentUser] = useState(null); // Start with no user logged in
+  const [currentUser , setCurrentUser ] = useState(null); // Start with no user logged in
 
   const addBooking = (newBooking) => {
     setBookings((prevBookings) => [
       ...prevBookings,
       { ...newBooking, id: uuidv4() },
     ]);
+    toast.success("Booking request sent!");
   };
 
   const updateBookingStatus = (bookingId, newStatus) => {
@@ -221,6 +221,7 @@ const TurfProvider = ({ children }) => {
         booking.id === bookingId ? { ...booking, status: newStatus } : booking
       )
     );
+    toast.success(`Booking status updated to ${newStatus}`);
   };
 
   const blockSlot = (turfId, date, timeSlot, notes = "Blocked by Admin") => {
@@ -232,14 +233,14 @@ const TurfProvider = ({ children }) => {
         b.status === "blocked"
     );
     if (existingBlock) {
-      console.log("Slot already blocked.");
+      toast.error("Slot already blocked.");
       return;
     }
     addBooking({
       turfId,
       date,
       timeSlot,
-      userId: currentUser?.id || "admin-1",
+      userId: currentUser ?.id || "admin-1",
       status: "blocked",
       paymentStatus: "N/A",
       notes,
@@ -258,6 +259,7 @@ const TurfProvider = ({ children }) => {
           )
       )
     );
+    toast.success("Slot unblocked successfully!");
   };
 
   const addReview = (newReview) => {
@@ -265,26 +267,30 @@ const TurfProvider = ({ children }) => {
       ...prevReviews,
       { ...newReview, id: uuidv4(), date: new Date().toISOString().split("T")[0] },
     ]);
+    toast.success("Review submitted successfully!");
   };
 
-  const registerUser = (userData) => {
-    const newUser = {
+  const registerUser  = (userData) => {
+    const newUser  = {
       id: uuidv4(),
       role: "player",
       ...userData,
     };
-    setUsers((prevUsers) => [...prevUsers, newUser]);
-    setCurrentUser(newUser);
+    setUsers((prevUsers) => [...prevUsers, newUser ]);
+    setCurrentUser (newUser );
+    toast.success("Registration successful! You are now signed in.");
   };
 
-  const signInUser = (email, contactNo) => {
+  const signInUser  = (email, contactNo) => {
     const user = users.find(
       (u) => u.email === email && u.contactNo === contactNo
     );
     if (user) {
-      setCurrentUser(user);
+      setCurrentUser (user);
+      toast.success("Sign-in successful!");
       return true;
     }
+    toast.error("Invalid email or contact number.");
     return false;
   };
 
@@ -295,15 +301,15 @@ const TurfProvider = ({ children }) => {
         bookings,
         users,
         reviews,
-        currentUser,
-        setCurrentUser,
+        currentUser ,
+        setCurrentUser ,
         addBooking,
         updateBookingStatus,
         blockSlot,
         unblockSlot,
         addReview,
-        registerUser,
-        signInUser,
+        registerUser ,
+        signInUser ,
       }}
     >
       {children}
@@ -312,7 +318,6 @@ const TurfProvider = ({ children }) => {
 };
 
 // --- 4. Reusable Components ---
-
 const StyledButton = styled.button`
   background-color: #e50914;
   color: white;
@@ -2072,6 +2077,7 @@ function App() {
           <Footer />
         </AppContainer>
       </TurfProvider>
+      <ToastContainer /> {/* Add ToastContainer for notifications */}
     </Router>
   );
 }
